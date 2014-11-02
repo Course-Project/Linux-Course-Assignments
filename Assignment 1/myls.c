@@ -123,7 +123,7 @@ void get_file_mode_str(const mode_t file_mode, char *mode_str) {
 int main(int argc, const char *argv[]) {
     if (argc == 1) {
         // 当前目录，无-l
-        ana_dir(".", WITHOUT_OPTION);
+        ana_dir(".", 0);
     }
     
     bool with_option = (strcmp("-l", argv[1]) == 0);
