@@ -25,6 +25,7 @@ void ana_dir(const char *name, const u_int8_t option);
 void get_file(const char *dir, const char *name);
 void get_file_info(const char *dir, const char *name);
 void get_file_mode_str(const mode_t file_mode, char *mode_str);
+void get_size_str(off_t size, char *size_str);
 
 void ana_dir(const char *name, const u_int8_t option) {
     DIR *dp; // 文件夹指针
@@ -59,7 +60,7 @@ void ana_dir(const char *name, const u_int8_t option) {
 }
 
 void get_file(const char *dir, const char *name) {
-    printf("%s  ", name);
+    printf("%.20s  ", name);
 }
 
 void get_file_info(const char *dir, const char *name) {
@@ -79,12 +80,16 @@ void get_file_info(const char *dir, const char *name) {
     // 处理权限字符串
     get_file_mode_str(sbuf.st_mode, mode_str);
     
-    printf("%s %3d %5s %s %7d %.20s %s",
+    // 处理大小
+    char size_str[5];
+    get_size_str(sbuf.st_size, size_str);
+    
+    printf("%s %3d %5s %s%7s %.20s %s",
            mode_str,
            sbuf.st_nlink,
            getpwuid(sbuf.st_uid)->pw_name,
            getgrgid(sbuf.st_gid)->gr_name,
-           (int)sbuf.st_size,
+           size_str,
            ctime(&sbuf.st_mtime),
            name);
 }
@@ -118,6 +123,34 @@ void get_file_mode_str(const mode_t file_mode, char *mode_str) {
     mode_str[9] = file_mode & S_ISVTX ? 't' : (file_mode & S_IXOTH ? 'x' : '-');
     
     mode_str[10] = '\0';
+}
+
+void get_size_str(off_t size, char *size_str) {
+    int n = 0;
+    float result = size;
+    while (size /1024 != 0) {
+        size /= 1024;
+        result /= 1024;
+        n++;
+    }
+    sprintf(size_str, "%3.1f", result);
+    
+    switch (n) {
+        case 0: size_str[3] = 'B'; break;
+        case 1: size_str[3] = 'K'; break;
+        case 2: size_str[3] = 'M'; break;
+        case 3: size_str[3] = 'G'; break;
+        default: break;
+    }
+    size_str[4] = '\0';
+    
+    if (size_str[2] == '.') {
+        // 去小数点，补空格
+        size_str[2] = size_str[1];
+        size_str[1] = size_str[0];
+        size_str[0] = ' ';
+    }
+    
 }
 
 int main(int argc, const char *argv[]) {
