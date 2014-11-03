@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <sys/stat.h>
+#include <string.h>
 
 int main(int argc, const char *argv[]) {
     // 判断参数
@@ -47,7 +48,7 @@ int main(int argc, const char *argv[]) {
     if (fs == -1) {
         // 文件打开错误
         // fd不会出错，因为会自动新建
-        fprintf(stderr, "%s: No such file or directory\n", file_src);
+        fprintf(stderr, "%s: %s\n", file_src, strerror(errno));
         return 1;
     }
     

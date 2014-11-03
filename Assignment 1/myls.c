@@ -33,7 +33,7 @@ void ana_dir(const char *name, const u_int8_t option) {
     
     // 打开文件夹
     if ((dp = opendir(name)) == NULL) {
-        fprintf(stderr, "ls: %s: No such file or directory.\n", name);
+        fprintf(stderr, "ls: %s: %s.\n", name, strerror(errno));
         return;
     }
     
