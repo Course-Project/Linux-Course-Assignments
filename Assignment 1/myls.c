@@ -59,7 +59,7 @@ void ana_dir(const char *name, const u_int8_t option) {
 }
 
 void get_file(const char *dir, const char *name) {
-    printf("%.20s  ", name);
+    printf("%s  ", name);
 }
 
 void get_file_info(const char *dir, const char *name) {
