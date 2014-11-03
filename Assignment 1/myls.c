@@ -84,7 +84,7 @@ void get_file_info(const char *dir, const char *name) {
     char size_str[5];
     get_size_str(sbuf.st_size, size_str);
     
-    printf("%s %3d %5s %s%7s %.20s %s",
+    printf("%s%3d%5s %s%5s %.20s%s",
            mode_str,
            sbuf.st_nlink,
            getpwuid(sbuf.st_uid)->pw_name,
