@@ -38,12 +38,7 @@ int main(int argc, const char *argv[]) {
     
     // 打开文件
     fs = open(file_src, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
-    fd = open(file_dst, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
-    
-    // 获取文件属性
-    stat(file_src, &fs_sbuf);
-    stat(file_dst, &fd_sbuf);
-    
+
     // 处理文件错误
     if (fs == -1) {
         // 文件打开错误
@@ -51,6 +46,12 @@ int main(int argc, const char *argv[]) {
         fprintf(stderr, "%s: %s\n", file_src, strerror(errno));
         return 1;
     }
+
+    fd = open(file_dst, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP);
+    
+    // 获取文件属性
+    stat(file_src, &fs_sbuf);
+    stat(file_dst, &fd_sbuf);
     
     offset = offset > fd_sbuf.st_size ? fd_sbuf.st_size : offset;
     offset = offset > 0 ? offset : 0;
