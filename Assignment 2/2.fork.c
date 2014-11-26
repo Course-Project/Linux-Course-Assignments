@@ -7,6 +7,7 @@
 
 #define err_sys(info) { \
     fprintf(stderr, "%s: %s\n", info, strerror(errno)); \
+    exit(EXIT_FAILURE); \
 }
 
 int g = 521;
