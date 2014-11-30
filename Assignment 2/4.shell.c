@@ -14,11 +14,21 @@
 
 int main(int argc, const char *argv[]) {
     char str[MAX_SIZE];
+    pid_t pid;
     while (scanf("%[^\n]", str) != EOF) {
         getchar(); // 读取回车
         
-        if (strcmp(str, "exit") != 0) system(str);
-        else break;
+        if (strcmp(str, "exit") == 0) break;
+        
+        pid = vfork();
+        if (pid < 0) {
+            err_sys("vfork error");
+        } else if (pid == 0) {
+            if (execlp("ls", "ls", "/Users/tomhu/Desktop", NULL) < 0) {
+                fprintf(stderr, "sh: command not found: %s\n", "");
+            }
+            _exit(EXIT_SUCCESS);
+        }
         
         memset(str, 0, sizeof(str));
     }
