@@ -20,7 +20,7 @@ void pre_exit(int status) {
 }
 
 int main(int argc, const char *argv[]) {
-    pid_t pid;
+    pid_t pid, _pid;
     int status;
     
     pid = fork();
@@ -31,17 +31,25 @@ int main(int argc, const char *argv[]) {
         // 子进程
         printf("in child process\n");
         printf("child pid=%d, ppid=%d, pgid=%d\n", getpid(), getppid(), getpgid(getpid()));
+        sleep(3);
         exit(EXIT_SUCCESS);
     } else {
         // 父进程
         printf("before waiting\n");
-//        waitpid(pid, &status, WUNTRACED); // 阻塞
-        waitpid(pid, &status, WNOHANG); // 非阻塞
-//        wait(&status); // 阻塞
+        while (1) {
+            _pid = waitpid(pid, &status, WNOHANG);
+            if (_pid < 0) {
+                err_sys("wait error");
+            } else if (0 == _pid) {
+                printf("child process is still running\n");
+                sleep(1);
+            } else {
+                break;
+            }
+        }
         printf("after waiting\n");
         printf("in parent process\n");
         printf("parent pid=%d, ppid=%d, pgid=%d\n", getpid(), getppid(), getpgid(getpid()));
-//        printf("child process exited with status %d \n", status);
         pre_exit(status);
     }
     
