@@ -35,8 +35,8 @@ int main(int argc, const char *argv[]) {
     } else {
         // 父进程
         printf("before waiting\n");
-//        waitpid(pid, &status, WUNTRACED); // 阻塞
-        waitpid(pid, &status, WNOHANG); // 非阻塞
+       waitpid(pid, &status, WUNTRACED); // 阻塞
+//        waitpid(pid, &status, WNOHANG); // 非阻塞
 //        wait(&status); // 阻塞
         printf("after waiting\n");
         printf("in parent process\n");
