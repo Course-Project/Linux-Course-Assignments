@@ -4,6 +4,7 @@
 #include <errno.h>
 #include <string.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
 #define err_sys(info) { \
     fprintf(stderr, "%s: %s\n", info, strerror(errno)); \
