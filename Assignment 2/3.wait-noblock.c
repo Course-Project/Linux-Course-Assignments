@@ -32,6 +32,7 @@ int main(int argc, const char *argv[]) {
         // 子进程
         printf("in child process\n");
         printf("child pid=%d, ppid=%d, pgid=%d\n", getpid(), getppid(), getpgid(getpid()));
+        printf("child process is still running\n");
         sleep(3);
         exit(EXIT_SUCCESS);
     } else {
@@ -42,7 +43,6 @@ int main(int argc, const char *argv[]) {
             if (_pid < 0) {
                 err_sys("wait error");
             } else if (0 == _pid) {
-                printf("child process is still running\n");
                 sleep(1);
             } else {
                 break;

@@ -32,12 +32,13 @@ int main(int argc, const char *argv[]) {
         // 子进程
         printf("in child process\n");
         printf("child pid=%d, ppid=%d, pgid=%d\n", getpid(), getppid(), getpgid(getpid()));
+        printf("child process is still running\n");
+        sleep(3);
         exit(EXIT_SUCCESS);
     } else {
         // 父进程
         printf("before waiting\n");
        waitpid(pid, &status, WUNTRACED); // 阻塞
-//        waitpid(pid, &status, WNOHANG); // 非阻塞
 //        wait(&status); // 阻塞
         printf("after waiting\n");
         printf("in parent process\n");
