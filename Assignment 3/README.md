@@ -1,6 +1,18 @@
 第三次作业
 =========
 
+最好在自己机器上先编译，生成两个可执行文件
+
+```bash
+$ make
+```
+
+如需删除可执行文件
+
+```bash
+$ make clean
+```
+
 ## Write a program to handle the exception of divided by 0.
 
 #### 源文件
