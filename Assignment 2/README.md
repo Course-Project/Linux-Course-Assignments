@@ -20,10 +20,16 @@
 
 ## 写一个程序去对比父子进程的阻塞和非阻塞等待，同时展示Memory Layout(内存空间分布)的变化
 
+#### 源文件
+
+- 3.wait-block.c
+- 3.wait-noblock.c
+
 #### 用法
 
 ```bash
-$ 
+$ ./3.wait-block
+$ ./3.wait-noblock
 ```
 
 ## How can you write a shell? Practice it.
@@ -35,3 +41,13 @@ $
 所以，这个shell还是要好好想想的，我的另一个思路是用`vfork`后调用`exec`去执行用户所输入的命令，当然得补全路径，可以通过处理环境变量`$PATH`来实现。
 
 最终的做法是，`cd`和`exit`单独处理，其他的丢给`system`函数去做。事实是，手贱用`vfork`加`execl`来实现`system`，略繁琐。
+
+#### 源文件
+
+- 4.shell.c
+
+#### 用法
+
+```bash
+$ ./4.shell
+```
