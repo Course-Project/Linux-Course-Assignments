@@ -26,7 +26,7 @@ int main(int argc, const char *argv[]) {
         err_sys("signal(SIGFPE) error");
     
     int jmpResult = sigsetjmp(env, 1);
-    
+    printf("sigjmpresult: %d\n", jmpResult);
     if (0 == jmpResult) {
         printf("%d\n", 5 / 0);
     } else {
