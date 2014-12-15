@@ -16,7 +16,7 @@ sigjmp_buf env;
 
 void SIGFPE_handler(int sigsum) {
     if (sigsum == SIGFPE) {
-        err_sys("can't be divided by 0");
+        printf("can't be divided by 0: %s\n", strerror(errno));
         siglongjmp(env, SIGFPE);
     }
 }
