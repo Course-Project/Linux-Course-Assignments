@@ -16,19 +16,20 @@ sigjmp_buf env;
 
 void SIGFPE_handler(int sigsum) {
     if (sigsum == SIGFPE) {
-        printf("can't be divided by 0: %s\n", strerror(errno));
+        printf("can't be divided by 0\n");
         siglongjmp(env, SIGFPE);
     }
 }
 
 int main(int argc, const char *argv[]) {
+    int a = 5, b = 0;
     if (signal(SIGFPE, SIGFPE_handler) == SIG_ERR)
         err_sys("signal(SIGFPE) error");
     
     int jmpResult = sigsetjmp(env, 1);
     printf("sigjmpresult: %d\n", jmpResult);
     if (0 == jmpResult) {
-        printf("%d\n", 5 / 0);
+        printf("%d\n", a / b);
     } else {
         printf("jmp finished + %d\n", jmpResult);
     }
