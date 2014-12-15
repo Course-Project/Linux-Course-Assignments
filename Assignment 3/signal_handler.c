@@ -14,8 +14,8 @@
 
 sigjmp_buf env;
 
-void SIGFPE_handler(int sigsum) {
-    if (sigsum == SIGFPE) {
+void SIGFPE_handler(int signo) {
+    if (signo == SIGFPE) {
         printf("can't be divided by 0\n");
         siglongjmp(env, SIGFPE);
     }
